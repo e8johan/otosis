@@ -34,8 +34,8 @@
 #include <sys/mman.h>
 #include <signal.h>
 /* sys/user.h needed for PAGE_SIZE */
-#include <asm/page.h>
-#include <linux/user.h>
+/*#include <asm/page.h>*/
+#include <sys/user.h>
 #include <linux/unistd.h>
 #include <termios.h>
 
@@ -319,10 +319,12 @@ setup_sysvars( void )
 
 #define __NR_pure_sigaction	__NR_sigaction
 
+#ifdef mc68000
 static inline _syscall3(int,pure_sigaction,
 						int,sig,
 						struct sigaction *,act,
 						struct sigaction *,oldact)
+#endif /* mc68000 */
 
 
 #define SETSIG(num,handler)	({						\
@@ -335,6 +337,7 @@ static inline _syscall3(int,pure_sigaction,
 				    sigaction( num, &sa, NULL );		\
 				  })
 
+#ifdef mc68000
 #define SETSTACKSIG(num,handler,stack)	({					\
 				    sigset_t mask;				\
 				    struct sigaction sa;			\
@@ -345,6 +348,7 @@ static inline _syscall3(int,pure_sigaction,
 				    sa.sa_flags = SA_NOMASK | SA_STACK;		\
 				    pure_sigaction( num, &sa, NULL );		\
 				  })
+#endif /* mc68000 */
 
 static
 void sig_killed( int signum )
