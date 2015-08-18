@@ -5,6 +5,7 @@ CPPFLAGS = -DDEBUG
 tos_SOURCES = \
 	compile.h emulate.c emulate.h tos.c version.c version.h load.c \
 	traps.c traps.h
+tos_LDADD = -L/home/e8johan/projects/atari/osis/inst/lib -locpuis
 
 BUILT_SOURCES = compile.h
 
