@@ -300,9 +300,9 @@ emulate(TosProgram * prog)
 
   /* Setup a pointer to basepage and clear one long */
   sp = ntohl((CPUaddr)prog->basepage->hitpa);
-  (CPUbyte *)sp -= 4;
+  sp -= 4;
   my_put_long(sp, (CPUlong)prog->basepage);
-  (CPUbyte *)sp -= 4;
+  sp -= 4;
   my_put_long(sp, (CPUlong)0);
 
   cpu = CPUsimple_template((CPUaddr)(prog->text),
@@ -311,13 +311,13 @@ emulate(TosProgram * prog)
 
   fill_template(cpu);
 
-  cpu->init_isp = malloc(4096);  /* 4096 Bytes should be enough, I hope */
+  cpu->init_isp = (CPUaddr)malloc(4096);  /* 4096 Bytes should be enough, I hope */
   if( cpu->init_isp==0L )
     cpu->init_isp = cpu->init_areg[7];  /* Should never happen! */
   else
     cpu->init_isp += 4000;
   
-  cpu->init_msp = malloc(4096);  /* Same for the msp - normally not needed,
+  cpu->init_msp = (CPUaddr)malloc(4096);  /* Same for the msp - normally not needed,
 				    but you never know... */
   if( cpu->init_msp==0L )
     cpu->init_msp = cpu->init_areg[7];
