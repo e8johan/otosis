@@ -24,7 +24,12 @@ for executing m68k binaries written for TOS systems.
 In addition to the projects mentioned above, the following dependencies are 
 needed (on a Debian Jessie system).
 
-- TODO
+- build-essential
+- git
+- automake
+- libtool
+- libncurses5-dev
+- libsdl-gfx1.2-dev
 
 ## Building
 
